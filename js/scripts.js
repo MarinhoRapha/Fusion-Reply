@@ -11,7 +11,7 @@ var header = document.getElementById('header')
 
 
 
-var items = document.querySelectorAll('.menu-desktop > ul > li > a ');
+const items = document.querySelectorAll('.menu-desktop > ul > li > a');
 
 items[0].classList.add('active-text');
 
@@ -28,6 +28,31 @@ items.forEach(function(li) {
   });
 });
 
+
+function highlightMenu() {
+  let currentSectionId = null;
+
+  document.querySelectorAll("section").forEach(section => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+      currentSectionId = section.id;
+    }
+  });
+
+  if (currentSectionId) {
+    items.forEach(item => {
+      const targetId = item.getAttribute("href").slice(1);
+      if (targetId === currentSectionId) {
+        item.classList.add("active-text");
+      } else {
+        item.classList.remove("active-text");
+      }
+    });
+  }
+
+}
+
+window.addEventListener("scroll", highlightMenu);
 
 
 
